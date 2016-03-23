@@ -6,7 +6,19 @@
 {% block title %}Облік Відвідування{% endblock title %}
 
 {% block content %}
+    <center>
+		<a href="#">&larr;</a>
+		Березень
+		<a href="#">&rarr;</a>
+	</center>
 
+    <!--
+	<center>
+		<a href="{% url "journal" %}?page={{ current_page }}&amp;month={% if month = 1 %}12&amp;year={{ year|add:"-1" }}{% else %}{{ month|add:"-1" }}&amp;year={{ year }}{% endif %}">&larr;</a>
+		{{ monthyear }}
+		<a href="{% url "journal" %}?page={{ current_page }}&amp;month={% if month = 12 %}1&amp;year={{ year|add:"1" }}{% else %}{{ month|add:"1" }}&amp;year={{ year }}{% endif %}">&rarr;</a>
+	</center>
+	-->
 
 					
 <!-- Start Students Listing -->
@@ -15,6 +27,10 @@
         <tr>
             <th>№</th>
             <th>Студент</th>
+            {% for day in days %}
+                <th>{{day}}</th>
+            {% endfor %}
+<!--
             <th>1<br>Вт</th>
             <th>2<br>Ср</th>
             <th>3<br>Чт</th>
@@ -46,10 +62,25 @@
             <th>29<br>Вт</th>
             <th>30<br>Ср</th>
             <th>31<br>Чт</th>
-
+-->
         </tr>
     </thead>
     <tbody>
+        {% for student in students %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url "students_edit" student.id %}">{{ student.last_name }}<br>{{ student.first_name }}</td>
+                {% for day in days %}
+                    <td>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" checked>
+                          </label>
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+<!--
         <tr>
             <td>1</td>
             <td><a href="{% url "students_edit" 1 %}">Артеменко<br>Роман</a></td>
@@ -713,6 +744,8 @@
                 </div>
             </td>
         </tr>
+-->
+        {% endfor %}
     </tbody>
 </table>
 
