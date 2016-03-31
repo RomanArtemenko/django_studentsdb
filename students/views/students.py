@@ -9,11 +9,14 @@ def students_list(request):
 
     #try to order students list
     order_by = request.GET.get('order_by', '')
-    if order_by in ('last_name', 'first_name', 'ticket'):
+    if order_by in ('last_name', 'first_name', 'ticket', 'id'):
         students = students.order_by(order_by)
-#        if students.GET.get('reverse', '')!='1':
-#        if students.GET.reverse != '1':
-#            students = students.reverse()
+        if request.GET.get('reverse', '') == '1':
+            students = students.reverse()
+#    else:
+#        order_by='last_name'
+#        students = students.order_by(order_by)
+#        students = students.reverse()
 
     return render(request,'students/students_list.html', {'students' : students})
 
